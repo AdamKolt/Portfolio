@@ -158,12 +158,12 @@ a { text-decoration: none; color: inherit; }
 .section-icon {
   width: 52px;
   height: 52px;
-  background: linear-gradient(135deg, #1A2B4A 60%, #C9A84C);
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
 }
 
 .section-icon svg { width: 28px; height: 28px; }
