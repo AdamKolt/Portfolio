@@ -126,6 +126,8 @@
       color: var(--gold);
       font-weight: 700;
     }
+    .resume-sub { display: grid; grid-template-columns: 120px 1fr; gap: 10px; margin-bottom: 10px; align-items: start; }
+    .resume-sub-label { font-size: 10.5px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.8px; padding-top: 2px; line-height: 1.4; }
 
     .cert-grid {
       display: grid;
@@ -134,11 +136,24 @@
     }
 
     .cert-item {
-      font-size: 13.5px;
-      color: #444;
       padding-left: 14px;
       position: relative;
-      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+
+    .cert-item strong {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #222;
+      line-height: 1.4;
+    }
+
+    .cert-item span {
+      display: block;
+      font-size: 11.5px;
+      color: #888;
+      margin-top: 1px;
     }
 
     .cert-item::before {
@@ -350,22 +365,66 @@
 
         <div class="resume-role">
           <div class="resume-role-header">
-            <span class="resume-role-title">Senior Business Analyst &amp; Product Manager</span>
-            <span class="resume-role-date">2015 &ndash; Present</span>
+            <span class="resume-role-title">SMB Operation Director</span>
+            <span class="resume-role-date">2014 &ndash; 2026</span>
           </div>
-          <div class="resume-role-company">Ooredoo Qatar &mdash; Doha, Qatar</div>
-          <ul>
-            <li>Conceptualized, developed, and launched MCaaS &mdash; the company&rsquo;s first data/API monetization
-              platform &mdash; generating $100K revenue in the first 30 days.</li>
-            <li>Led B2B Digital Transformation initiative delivering a self-service sales platform that reduced order
-              processing time by 70%+.</li>
-            <li>Designed and launched B2B2C &ldquo;Home Star Service&rdquo; tri-party commercial model, capturing 2%
-              market share gain within year one against Vodafone Qatar.</li>
-            <li>Revamped B2B sales operations achieving NPS improvement of +18 points and lifting CSAT from 67% to 84%.
-            </li>
-            <li>Reduced order-to-activation cycle from 9 days to 3 days through end-to-end process automation and value
-              stream redesign.</li>
-          </ul>
+          <div class="resume-role-company">Ooredoo Qatar</div>
+          <div style="font-size:11.5px;color:#888;font-style:italic;margin-bottom:10px;">Ooredoo is a fast-paced multi-national corporation offering telecom, cloud, and ICT services in 13 countries with 100m subscribers.</div>
+
+          <div class="resume-sub">
+            <div class="resume-sub-label">Process Optimization</div>
+            <ul>
+              <li>Accelerated revenue velocity by 20% by re-engineering the omnichannel Lead-to-Cash (L2C) lifecycle; eliminated cross-functional bottlenecks and improved order accuracy through targeted automation.</li>
+              <li>Modernized business processes using BPMN 2.0 (As-Is/To-Be) modeling and Value Stream Mapping (VSM) to identify and automate high-friction manual procedures.</li>
+              <li>Engineered hybrid fulfillment architectures to auto provision core services (Mobile/FBB), use marketplace platform to activate SaaS (M365/GWS), while capturing complex orders manually seamless to customer.</li>
+              <li>Uplifted net profit by 3% by optimizing scheduling of partners in delivering a $50M global network project.</li>
+            </ul>
+          </div>
+
+          <div class="resume-sub">
+            <div class="resume-sub-label">Digital Transformation</div>
+            <ul>
+              <li>Reduced Customer Acquisition Cost (CAC) by 20% by spearheading the region&rsquo;s first B2B self-service portal and mobile app, shifting the acquisition model to a digital-first strategy.</li>
+              <li>Orchestrated end-to-end product discovery via JAD sessions, stakeholder interviews, and system audits; defined epics and prioritized the MVP roadmap based on high-value business impact.</li>
+              <li>Eliminated legacy product catalog complexities by designing a scalable, data-driven taxonomy using UML, significantly improving product discoverability and user adoption.</li>
+              <li>Optimized Agile delivery cycles by leading sprint planning and backlog refinement. Achieved reduction in requirement volatility by enforcing INVEST-compliant user stories and rigorous Definition of Done (DoD).</li>
+            </ul>
+          </div>
+
+          <div class="resume-sub">
+            <div class="resume-sub-label">Data Governance</div>
+            <ul>
+              <li>Executed a 100% integrity migration of legacy portal records using SQL and Power BI for gap analysis and data cleansing, ensuring a seamless transition to the new architecture.</li>
+              <li>Architected an omnichannel data capture framework that synchronized CRM touchpoints, driving a 200% increase in outbound reach and providing field sales with a real-time &ldquo;Single Source of Truth.&rdquo;</li>
+              <li>Improved retention save-ratio by 18% through the development of predictive churn models that analyzed high-value triggers such as bill shock, technical friction, and usage patterns.</li>
+            </ul>
+          </div>
+
+          <div class="resume-sub">
+            <div class="resume-sub-label">Sales Enablement</div>
+            <ul>
+              <li>Reduced agent onboarding ramp-up time by 50% by implementing B2B Sales Academy program and sales CMS.</li>
+              <li>Transformed the mobile module of Oracle SFA into a mini-CRM delivering real-time visibility into customer locations, active service portfolios, support tickets, and generated leads to optimize field productivity.</li>
+            </ul>
+          </div>
+
+          <div class="resume-sub">
+            <div class="resume-sub-label">AI Integration</div>
+            <ul>
+              <li>Architected a secure RAG-based (Retrieval-Augmented Generation) AI chatbot integrating GPT-4o with CRM and regulatory tariff libraries to automate B2B inquiries and lead qualification.</li>
+              <li>Designed backend API ecosystems using Swagger to integrate Oracle SFA and Siebel CRM, enabling real-time customer validation and automated lead tracking via Google Analytics/Firebase.</li>
+            </ul>
+          </div>
+
+          <div class="resume-sub">
+            <div class="resume-sub-label">Product Led Growth</div>
+            <ul>
+              <li>Generated $400K in new revenue within 90 days by launching a disruptive data monetization and B2B2C platform built on &ldquo;Compliance-by-Design&rdquo; principles to navigate strict privacy regulations.</li>
+              <li>Secured market share by developing a B2B2C platform for property managers to automate tenant service cycles, creating a &ldquo;competitive moat&rdquo; through a three-way value proposition.</li>
+              <li>Spearheaded Sovereign Cloud productization across Azure, GCP, and AWS, streamlining the CX via consumption-based subscription plans for VMs and BaaS (Backup as a Service).</li>
+              <li>Improved customer stickiness and ARPA by 5% by launching Value-Added Services (VAS) in partnership with industry leaders including Microsoft, Google, Cisco, Huawei, and NVIDIA.</li>
+            </ul>
+          </div>
         </div>
 
         <div class="resume-role">
@@ -374,16 +433,22 @@
             <span class="resume-role-date">2010 &ndash; 2015</span>
           </div>
           <div class="resume-role-company">Ooredoo Qatar (Government Sector) &mdash; Doha, Qatar</div>
-          <ul>
-            <li>Governed end-to-end delivery of a $50M global secure network connecting 700+ diplomatic missions for the
-              State Government of Qatar.</li>
-            <li>Achieved 5% profit margin improvement through disciplined scope management, schedule optimization, and
-              vendor negotiation.</li>
-            <li>Deployed Cisco UC&amp;C, encrypted WAN, and WAN optimization across 700+ international locations
-              spanning multiple continents.</li>
-            <li>Coordinated 100+ global resources across time zones, regulatory jurisdictions, and cultural contexts.
-            </li>
-          </ul>
+
+          <div class="resume-sub">
+            <div class="resume-sub-label">Stakeholder Management</div>
+            <ul>
+              <li>Optimized P&amp;L and operational delivery for a high-stakes portfolio of government contracts, achieving a 100% renewal and extension rate through proactive risk mitigation and value-driven service delivery.</li>
+              <li>Managed complex stakeholder landscapes, serving as the primary liaison between government entities and internal delivery teams to guide requirements and ensure 100% compliance.</li>
+              <li>Led executive meetings presenting progress and contingency plans aligning milestones to objectives.</li>
+            </ul>
+          </div>
+
+          <div class="resume-sub">
+            <div class="resume-sub-label">Cross-Functional Alignment</div>
+            <ul>
+              <li>Orchestrated cross-functional onshore/offshore development teams to deliver bespoke software solutions, ensuring traceability from initial client requirements to final acceptance.</li>
+            </ul>
+          </div>
         </div>
 
         <div class="resume-role">
@@ -392,14 +457,24 @@
             <span class="resume-role-date">2003 &ndash; 2010</span>
           </div>
           <div class="resume-role-company">Saber Consulting &mdash; Salem, Oregon, USA</div>
-          <ul>
-            <li>Designed proprietary COTS implementation methodology adopted company-wide and credited for winning the
-              AAA Auto Club Group contract across 13 U.S. states.</li>
-            <li>Contributed to 893% revenue growth over four years, resulting in company acquisition by EDS and Deloitte
-              Technology Fast 500 ranking (#181, 2007).</li>
-            <li>Led requirements engineering, BPR, data migration, and multi-state rollout for enterprise insurance
-              platform deployments.</li>
-          </ul>
+
+          <div class="resume-sub">
+            <div class="resume-sub-label">Product Development</div>
+            <ul>
+              <li>Engineered a market-disruptive Voter Registration &amp; Elections Management system in response to the HAVA Act of 2002 scaling annual revenue 10x ($5.8M to $57.8M) in 4 years, resulting in acquisition by EDS.</li>
+              <li>Orchestrated large-scale Joint Application Design (JAD) sessions across 13 states, utilizing DSDM methodology for rapid prototyping and iterative feedback to ensure compliance and consensus.</li>
+              <li>Transformed complex legislative mandates into functional specifications, bridging the gap between state-level policy requirements and technical execution to deliver user-centric agency portals.</li>
+              <li>Architected a scalable, parameter-driven product design that reconciled diverse state-level requirements into a single, modular COTS platform, ensuring 100% regulatory compliance and requirement traceability.</li>
+            </ul>
+          </div>
+
+          <div class="resume-sub">
+            <div class="resume-sub-label">Delivery Governance</div>
+            <ul>
+              <li>Developed a repeatable implementation framework and standardized deployment playbook, significantly reducing technical risk and accelerating time-to-market across multiple complex jurisdictions.</li>
+              <li>Led requirements elicitation and UX/UI design strategy for a diverse portfolio of Oregon state agency workflows, successfully migrating legacy manual processes into high-performance digital solutions.</li>
+            </ul>
+          </div>
         </div>
 
       </div>
@@ -409,17 +484,19 @@
       <div class="resume-section">
         <div class="resume-section-title">Education &amp; Certifications</div>
         <div class="cert-grid">
-          <div class="cert-item">Master of Business Administration (MBA) &mdash; Maryhurst University, Oregon</div>
-          <div class="cert-item">Bachelor of Electrical Engineering (BEE) &mdash; Qatar University</div>
-          <div class="cert-item">Stanford Certified Project Manager (SCPM) &mdash; Stanford University</div>
-          <div class="cert-item">Project Management Professional (PMP) &mdash; PMI</div>
-          <div class="cert-item">Certified Business Analysis Professional (CBAP) &mdash; IIBA</div>
-          <div class="cert-item">Advanced Data Analysis, Agile Methodology &amp; Requirements Engineering &mdash;
-            Continuing Education</div>
+          <div class="cert-item"><strong>Master of Business Administration (MBA)</strong><span>Maryhurst University,
+              Oregon</span></div>
+          <div class="cert-item"><strong>Bachelor of Electrical Engineering (BEE)</strong><span>Qatar University</span>
+          </div>
+          <div class="cert-item"><strong>Stanford Certified Project Manager (SCPM)</strong><span>Stanford
+              University</span></div>
+          <div class="cert-item"><strong>Project Management Professional (PMP)</strong><span>Project Management
+              Institute (PMI)</span></div>
         </div>
       </div>
-
     </div>
+
+  </div>
   </div>
 
   <footer class="site-footer">
