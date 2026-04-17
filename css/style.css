@@ -195,7 +195,7 @@ a { text-decoration: none; color: inherit; }
 /* ── INTRO TEXT ── */
 .intro {
   margin: 20px 0 24px;
-  font-size: 13.5px;
+  font-size: 14px;
   color: #333;
   line-height: 1.7;
 }
@@ -213,7 +213,7 @@ a { text-decoration: none; color: inherit; }
 
 .callout-body {
   padding: 14px 18px;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.65;
   flex: 1;
 }
@@ -240,7 +240,7 @@ a { text-decoration: none; color: inherit; }
   gap: 10px;
   padding: 10px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.65;
   align-items: flex-start;
 }
@@ -485,7 +485,7 @@ a { text-decoration: none; color: inherit; }
   display: flex; gap: 10px;
   padding: 9px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 12.5px; line-height: 1.65;
+  font-size: 14px; line-height: 1.65;
   align-items: flex-start;
 }
 
@@ -653,7 +653,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .nested-list li {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.65;
   color: #333;
   padding-left: 14px;
@@ -844,7 +844,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .device-content p {
-  font-size: 13px;
+  font-size: 14px;
   color: #444;
   line-height: 1.65;
 }
