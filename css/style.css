@@ -921,6 +921,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .project-card {
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 16px 20px 13px;
