@@ -625,7 +625,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 /* ── NUMBERED SECTION HEADER ── */
-.num-section { margin: 20px 0 8px; }
+.num-section { margin: 28px 0 8px; }
 
 .num-section h3 {
   font-size: 14px;
