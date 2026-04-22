@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>SMB Weekly Revenue Retro</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #F3F2F1;
+      margin: 0;
+      padding: 24px;
+      color: #252423;
+    }
+
+    .dashboard {
+      max-width: 1480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .db-header {
+      background: #252423;
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 4px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .db-header h1 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+      letter-spacing: 0.3px;
+    }
+
+    .db-header .meta {
+      font-size: 11.5px;
+      color: #C8C6C4;
+      display: flex;
+      gap: 16px;
+    }
+
+    .db-header .meta span strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* KPI ROW */
+    .kpi-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .kpi {
+      background: #fff;
+      border-radius: 4px;
+      padding: 14px 18px;
+      border-top: 3px solid #118DFF;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+    }
+
+    .kpi:nth-child(2) {
+      border-top-color: #12239E;
+    }
+
+    .kpi:nth-child(3) {
+      border-top-color: #E66C37;
+    }
+
+    .kpi:nth-child(4) {
+      border-top-color: #1AAA55;
+    }
+
+    .kpi .label {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #605E5C;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .kpi .value {
+      font-size: 26px;
+      font-weight: 600;
+      color: #252423;
+      line-height: 1.1;
+    }
+
+    .kpi .sub {
+      font-size: 11px;
+      color: #605E5C;
+      margin-top: 4px;
+    }
+
+    .kpi .delta {
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+
+    .kpi .delta.up {
+      color: #0B8043;
+    }
+
+    .kpi .delta.down {
+      color: #D13438;
+    }
+
+    /* MATRIX */
+    .matrix-card {
+      background: #fff;
+      border-radius: 4px;
+      padding: 14px 16px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+    }
+
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #252423;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title .card-sub {
+      font-size: 10.5px;
+      color: #605E5C;
+      font-weight: 400;
+    }
+
+    table.matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    table.matrix thead tr.group th {
+      background: #FAF9F8;
+      color: #252423;
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      padding: 6px 4px;
+      border-bottom: 1px solid #EDEBE9;
+      text-align: center;
+    }
+
+    table.matrix thead tr.group th.mobile {
+      background: #EAF3FB;
+      color: #0B6BCB;
+    }
+
+    table.matrix thead tr.group th.fixed {
+      background: #FDF1E3;
+      color: #A15D1D;
+    }
+
+    table.matrix thead tr.group th.managed {
+      background: #EAF5EE;
+      color: #1E7A3D;
+    }
+
+    table.matrix thead tr.group th.mrc {
+      background: #F1EEF8;
+      color: #523A89;
+    }
+
+    table.matrix thead tr.group th.ict {
+      background: #FDECEC;
+      color: #A4292E;
+    }
+
+    table.matrix thead tr.group th.otc {
+      background: #F2F2F2;
+      color: #37352F;
+    }
+
+    table.matrix thead tr.sub th {
+      background: #FAF9F8;
+      font-size: 10px;
+      font-weight: 600;
+      color: #605E5C;
+      padding: 5px 3px;
+      border-bottom: 1px solid #EDEBE9;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    table.matrix thead tr.sub th.metric {
+      text-align: left;
+    }
+
+    table.matrix tbody td {
+      padding: 5px 3px;
+      text-align: right;
+      border-bottom: 1px solid #F3F2F1;
+      font-variant-numeric: tabular-nums;
+      color: #252423;
+    }
+
+    table.matrix tbody td.metric {
+      text-align: left;
+      font-weight: 600;
+      color: #605E5C;
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    table.matrix tbody td.neg {
+      color: #D13438;
+    }
+
+    table.matrix tbody td.pos {
+      color: #0B8043;
+    }
+
+    table.matrix tbody tr.highlight td {
+      background: #FFFBEA;
+      font-weight: 600;
+    }
+
+    table.matrix tbody tr.net-row td {
+      border-top: 1px solid #D2D0CE;
+      font-weight: 600;
+      background: #FAF9F8;
+    }
+
+    /* CHARTS */
+    .chart-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .chart-card {
+      background: #fff;
+      border-radius: 4px;
+      padding: 14px 16px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+    }
+
+    .chart-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .chart-head .title-block h3 {
+      font-size: 13px;
+      font-weight: 600;
+      margin: 0 0 2px;
+      color: #252423;
+    }
+
+    .chart-head .title-block .sub {
+      font-size: 10.5px;
+      color: #605E5C;
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      font-size: 10.5px;
+      color: #605E5C;
+    }
+
+    .legend .sw {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+
+    .sw.blue {
+      background: #118DFF;
+    }
+
+    .sw.red {
+      background: #D13438;
+    }
+
+    .chart-summary {
+      display: flex;
+      gap: 18px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #EDEBE9;
+    }
+
+    .chart-summary .stat {
+      font-size: 10.5px;
+      color: #605E5C;
+    }
+
+    .chart-summary .stat strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: #252423;
+      margin-top: 2px;
+    }
+
+    .footer-bar {
+      background: #fff;
+      border-radius: 4px;
+      padding: 10px 16px;
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      font-size: 11.5px;
+      color: #605E5C;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
+      border-top: 3px solid #F2C94C;
+    }
+
+    .footer-bar strong {
+      color: #252423;
+      font-weight: 600;
+      margin-left: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard">
+
+    <!-- HEADER -->
+    <div class="db-header">
+      <h1>SMB &mdash; Weekly Revenue Retro</h1>
+      <div class="meta">
+        <span>Source of record: <strong>CRM + Billing</strong></span>
+        <span>Week <strong>36</strong></span>
+        <span>Refreshed <strong>Mon 08:00 AST</strong></span>
+      </div>
+    </div>
+
+    <!-- KPI ROW -->
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="label">Total New YTD MRC</div>
+        <div class="value">QR 8.68M</div>
+        <div class="sub">8,684,466 &middot; gross new recurring</div>
+        <div class="delta up">&#9650; 4.2% vs. prior week</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Net QR (After Churn)</div>
+        <div class="value">QR 2.41M</div>
+        <div class="sub">2,414,962 &middot; retention-adjusted</div>
+        <div class="delta up">&#9650; 27.8% gross-to-net retention</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Forecast Accuracy</div>
+        <div class="value">95.0%</div>
+        <div class="sub">4-week rolling &middot; target 90%</div>
+        <div class="delta up">&#9650; +5 pts vs. 90% target</div>
+      </div>
+      <div class="kpi">
+        <div class="label">Total YTD OTC</div>
+        <div class="value">QR 4.09M</div>
+        <div class="sub">4,088,026 &middot; one-time charges</div>
+        <div class="delta up">&#9650; 12.8% YoY</div>
+      </div>
+    </div>
+
+    <!-- MATRIX -->
+    <div class="matrix-card">
+      <div class="card-title">
+        <span>Product Performance Matrix &mdash; SMB YTD</span>
+        <span class="card-sub">Units &middot; MRC (QR) &middot; ARPU (QR)</span>
+      </div>
+      <table class="matrix">
+        <thead>
+          <tr class="group">
+            <th></th>
+            <th colspan="6" class="mobile">Mobile</th>
+            <th colspan="6" class="fixed">Fixed</th>
+            <th colspan="4" class="managed">Managed</th>
+            <th colspan="4" class="mrc">ICT-MRC</th>
+            <th colspan="5" class="ict">ICT-OTC</th>
+            <!-- <th colspan="2" class="otc">OTC</th> -->
+          </tr>
+          <tr class="sub">
+            <th class="metric">Metric</th>
+            <th>MNP</th>
+            <th>AAMALI</th>
+            <th>MBB</th>
+            <th>PTT</th>
+            <th>TETRA</th>
+            <th>SMS</th>
+            <th>LANDLINE</th>
+            <th>FNP&nbsp;LL</th>
+            <th>FNP&nbsp;FBB</th>
+            <th>FBB</th>
+            <th>OO</th>
+            <th>HBB</th>
+            <th>S&nbsp;WiFi</th>
+            <th>EDGE</th>
+            <th>CLD</th>
+            <th>IoT&nbsp;SIMS</th>
+            <th>FLT&nbsp;SIMS</th>
+            <th>POS</th>
+            <th>MS365</th>
+            <th>OTHERS</th>
+            <th>IDEAHUB</th>
+            <th>REACH</th>
+            <th>OPN</th>
+            <th>OPN</th>
+            <th>OTHERS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="metric">Add</td>
+            <td>4,869</td>
+            <td>19,606</td>
+            <td>1,934</td>
+            <td>584</td>
+            <td>454</td>
+            <td>5</td>
+            <td>1,515</td>
+            <td>11</td>
+            <td>69</td>
+            <td>3,201</td>
+            <td>28</td>
+            <td>2,945</td>
+            <td>175</td>
+            <td>89</td>
+            <td>152</td>
+            <td>367</td>
+            <td>1,334</td>
+            <td>203</td>
+            <td>4,505</td>
+            <td>4,885</td>
+            <td>45</td>
+            <td>142</td>
+            <td>6</td>
+            <td>&mdash;</td>
+            <td>279</td>
+          </tr>
+          <tr>
+            <td class="metric">Add MRC</td>
+            <td>2,911,220</td>
+            <td>544,955</td>
+            <td>45,684</td>
+            <td>50,957</td>
+            <td>1,900</td>
+            <td>1,100</td>
+            <td>217,605</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>2,431,922</td>
+            <td>11,799</td>
+            <td>848,969</td>
+            <td>15,155</td>
+            <td>27,108</td>
+            <td>3,492</td>
+            <td>13,615</td>
+            <td>58,763</td>
+            <td>30,450</td>
+            <td>177,523</td>
+            <td>507,535</td>
+            <td>1,956,423</td>
+            <td>60,661</td>
+            <td>252,823</td>
+            <td>&mdash;</td>
+            <td>353,944</td>
+          </tr>
+          <tr>
+            <td class="metric">Churn</td>
+            <td class="neg">3,626</td>
+            <td class="neg">12,481</td>
+            <td class="neg">1,845</td>
+            <td class="neg">148</td>
+            <td class="neg">1,167</td>
+            <td class="neg">20</td>
+            <td class="neg">3,012</td>
+            <td class="neg">194</td>
+            <td class="neg">243</td>
+            <td class="neg">2,433</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">1,497</td>
+            <td class="neg">95</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">24</td>
+            <td class="neg">140</td>
+            <td class="neg">65</td>
+            <td class="neg">9</td>
+            <td class="neg">120</td>
+            <td class="neg">1,964</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+          </tr>
+          <tr>
+            <td class="metric">Churn MRC</td>
+            <td class="neg">2,205,518</td>
+            <td class="neg">585,648</td>
+            <td class="neg">11,173</td>
+            <td class="neg">99,374</td>
+            <td class="neg">5,900</td>
+            <td class="neg">4,800</td>
+            <td class="neg">366,401</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">1,879,468</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">461,095</td>
+            <td class="neg">7,091</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">6,025</td>
+            <td class="neg">514</td>
+            <td class="neg">6,338</td>
+            <td class="neg">1,350</td>
+            <td class="neg">4,887</td>
+            <td class="neg">112,187</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+          </tr>
+          <tr class="net-row">
+            <td class="metric">Net Units</td>
+            <td class="pos">+1,243</td>
+            <td class="pos">7,125</td>
+            <td class="pos">89</td>
+            <td class="pos">436</td>
+            <td class="neg">(713)</td>
+            <td class="neg">(15)</td>
+            <td class="neg">(1,497)</td>
+            <td class="neg">(183)</td>
+            <td class="neg">(174)</td>
+            <td class="pos">768</td>
+            <td class="pos">28</td>
+            <td class="pos">1,448</td>
+            <td class="pos">126</td>
+            <td class="pos">74</td>
+            <td class="pos">128</td>
+            <td class="pos">227</td>
+            <td class="pos">1,269</td>
+            <td class="pos">194</td>
+            <td class="pos">4,385</td>
+            <td class="pos">4,431</td>
+            <td class="pos">45</td>
+            <td class="pos">107</td>
+            <td class="pos">6</td>
+            <td class="pos">&mdash;</td>
+            <td class="pos">279</td>
+          </tr>
+          <tr class="net-row">
+            <td class="metric">Net MRC</td>
+            <td class="pos">705,702</td>
+            <td class="pos">(50,693)</td>
+            <td class="pos">34,511</td>
+            <td class="pos">(48,177)</td>
+            <td class="neg">(4,000)</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">(168,796)</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="pos">552,504</td>
+            <td class="pos">11,799</td>
+            <td class="pos">387,884</td>
+            <td class="pos">8,064</td>
+            <td class="pos">21,083</td>
+            <td class="neg">(2,533)</td>
+            <td class="pos">13,101</td>
+            <td class="pos">52,425</td>
+            <td class="pos">29,100</td>
+            <td class="pos">172,637</td>
+            <td class="pos">395,348</td>
+            <td class="pos">1,956,423</td>
+            <td class="pos">60,661</td>
+            <td class="pos">252,823</td>
+            <td class="pos">&mdash;</td>
+            <td class="pos">353,944</td>
+          </tr>
+          <tr>
+            <td class="metric">Add ARPU</td>
+            <td>148</td>
+            <td>282</td>
+            <td>78</td>
+            <td>112</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>144</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>760</td>
+            <td>&mdash;</td>
+            <td>288</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>37</td>
+            <td>44</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+          </tr>
+          <tr>
+            <td class="metric">Churn ARPU</td>
+            <td class="neg">177</td>
+            <td class="neg">323</td>
+            <td class="neg">75</td>
+            <td class="neg">85</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">128</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">772</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">308</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">76</td>
+            <td class="neg">92</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+            <td class="neg">&mdash;</td>
+          </tr>
+          <tr class="highlight">
+            <td class="metric">ARPU Trend</td>
+            <td class="neg">&#9660; 19%</td>
+            <td class="neg">&#9660; 15%</td>
+            <td class="pos">&#9650; 3%</td>
+            <td class="pos">&#9650; 24%</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td class="pos">&#9650; 11%</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td class="neg">&#9660; 2%</td>
+            <td>&mdash;</td>
+            <td class="neg">&#9660; 7%</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td class="neg">&#9660; 8%</td>
+            <td class="pos">&#9650; 31%</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td class="neg">&#9660; 105%</td>
+            <td class="neg">&#9660; 103%</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+            <td>&mdash;</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="chart-row">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div class="title-block">
+            <h3>Startups &mdash; Weekly Trend</h3>
+            <div class="sub">Adds vs. churn &middot; Weeks 1&ndash;36</div>
+          </div>
+          <div class="legend">
+            <span><span class="sw blue"></span>Adds</span>
+            <span><span class="sw red"></span>Churn</span>
+          </div>
+        </div>
+        <svg viewBox="0 0 720 200" width="100%" height="200" preserveAspectRatio="none">
+          <!-- Grid -->
+          <line x1="0" y1="50" x2="720" y2="50" stroke="#EDEBE9" stroke-width="1" />
+          <line x1="0" y1="100" x2="720" y2="100" stroke="#EDEBE9" stroke-width="1" />
+          <line x1="0" y1="150" x2="720" y2="150" stroke="#EDEBE9" stroke-width="1" />
+          <!-- Adds line (blue) -->
+          <polyline fill="none" stroke="#118DFF" stroke-width="2"
+            points="10,70 30,85 50,50 70,35 90,33 110,30 130,34 150,37 170,37 190,55 210,85 230,36 250,62 270,35 290,60 310,85 330,55 350,34 370,63 390,50 410,46 430,52 450,22 470,27 490,60 510,63 530,48 550,55 570,42 590,44 610,63 630,60 650,33 670,43 690,46 710,20" />
+          <!-- Churn line (red) -->
+          <polyline fill="none" stroke="#D13438" stroke-width="2"
+            points="10,127 30,162 50,130 70,148 90,130 110,142 130,148 150,157 170,152 190,165 210,135 230,141 250,157 270,148 290,153 310,175 330,153 350,137 370,134 390,140 410,134 430,130 450,140 470,138 490,140 510,142 530,120 550,148 570,127 590,142 610,144 630,157 650,134 670,140 690,109 710,130" />
+          <!-- Data markers (adds) -->
+          <g fill="#118DFF">
+            <circle cx="450" cy="22" r="3" />
+            <circle cx="710" cy="20" r="3" />
+          </g>
+        </svg>
+        <div class="chart-summary">
+          <div class="stat">YTD Adds <strong>2,267</strong></div>
+          <div class="stat">YTD Churn <strong>872</strong></div>
+          <div class="stat">Net <strong style="color:#0B8043;">+1,395</strong></div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-head">
+          <div class="title-block">
+            <h3>MNP &mdash; Weekly Trend</h3>
+            <div class="sub">Port-in vs. port-out &middot; Weeks 1&ndash;36</div>
+          </div>
+          <div class="legend">
+            <span><span class="sw blue"></span>Port-In</span>
+            <span><span class="sw red"></span>Port-Out</span>
+          </div>
+        </div>
+        <svg viewBox="0 0 720 200" width="100%" height="200" preserveAspectRatio="none">
+          <line x1="0" y1="50" x2="720" y2="50" stroke="#EDEBE9" stroke-width="1" />
+          <line x1="0" y1="100" x2="720" y2="100" stroke="#EDEBE9" stroke-width="1" />
+          <line x1="0" y1="150" x2="720" y2="150" stroke="#EDEBE9" stroke-width="1" />
+          <!-- Port-in (blue) with spikes -->
+          <polyline fill="none" stroke="#118DFF" stroke-width="2"
+            points="10,165 30,175 50,115 70,75 90,135 110,130 130,145 150,155 170,160 190,175 210,140 230,10 250,165 270,158 290,140 310,135 330,182 350,135 370,130 390,125 410,135 430,160 450,95 470,0 490,162 510,160 530,133 550,132 570,150 590,148 610,50 630,80 650,155 670,135 690,130 710,135" />
+          <!-- Port-out (red) -->
+          <polyline fill="none" stroke="#D13438" stroke-width="2"
+            points="10,175 30,173 50,155 70,172 90,170 110,162 130,158 150,172 170,150 190,166 210,140 230,120 250,170 270,151 290,160 310,142 330,190 350,140 370,151 390,155 410,177 430,140 450,155 470,148 490,173 510,165 530,167 550,173 570,168 590,170 610,148 630,148 650,146 670,144 690,168 710,189" />
+          <!-- Spike markers -->
+          <g fill="#118DFF">
+            <circle cx="230" cy="10" r="4" />
+            <circle cx="470" cy="0" r="4" />
+          </g>
+        </svg>
+        <div class="chart-summary">
+          <div class="stat">Port-In YTD <strong>4,869</strong></div>
+          <div class="stat">Port-Out YTD <strong>3,626</strong></div>
+          <div class="stat">Net MNP <strong style="color:#0B8043;">+1,243</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER STRIP -->
+    <div class="footer-bar">
+      <span>Total New YTD MRC QR <strong>8,684,466</strong></span>
+      <span>Net QR <strong>2,414,962</strong></span>
+      <span>After Churn <strong>72.2%</strong></span>
+      <span>Total YTD OTC QR <strong>4,088,026</strong></span>
+    </div>
+
+  </div>
+</body>
+
+</html>
