@@ -968,6 +968,21 @@ a { text-decoration: none; color: inherit; }
   line-height: 1.6;
 }
 
+/* Homepage cards: icon left, two-line title right, desc below */
+.cards-grid .project-card {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  column-gap: 14px;
+  align-items: center;
+}
+.cards-grid .project-card .card-icon { margin-bottom: 0; }
+.cards-grid .project-card .card-title { margin-bottom: 0; }
+.cards-grid .project-card .card-title h3 { line-height: 1.2; }
+.cards-grid .project-card .card-desc {
+  grid-column: 1 / -1;
+  margin-top: 14px;
+}
+
 /* ── ABOUT PAGE ── */
 .page-title {
   font-family: 'Playfair Display', serif;
