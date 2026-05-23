@@ -1086,7 +1086,7 @@ a {
   grid-template-columns: 1fr auto;
   gap: 40px;
   align-items: flex-end;
-  background: var(--white);
+  background: #FAFAFA;
   box-shadow: 0 4px 40px rgba(0, 0, 0, .10);
 }
 
