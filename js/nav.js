@@ -70,8 +70,12 @@
     var params = new URLSearchParams(window.location.search);
     var from = params.get('from');
 
+    // Default to RevOps when no satellite context is provided. This keeps
+    // case studies and the Foundation page navigable when visited directly
+    // (e.g., from a shared link, a search result, or a redirect from the
+    // legacy main-Portfolio URL).
     if (!from || !SATELLITES[from]) {
-      return;
+      from = 'revops';
     }
 
     var satellite = SATELLITES[from];
