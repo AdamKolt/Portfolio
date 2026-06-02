@@ -26,6 +26,20 @@
 
   var PORTFOLIO_BASE = 'https://adamkolt.github.io/Portfolio';
 
+  // Per-satellite ordered list of case-study slugs (filename without .html).
+  // When set, the sub-nav on case-study pages is filtered + reordered to match.
+  // When a satellite is absent from this map, the sub-nav is left as-is.
+  var SATELLITE_CASES = {
+    comms: [
+      'market-creation',
+      'data-monetization',
+      'embedded-onboarding',
+      'digital-self-service',
+      'cctv-as-a-service',
+      'huawei-ideahub'
+    ]
+  };
+
   function rewriteLink(link, satellite, from) {
     var href = link.getAttribute('href');
     if (!href) return;
@@ -101,6 +115,50 @@
       if (link.classList.contains('header-logo')) return;
       rewriteLink(link, satellite, from);
     });
+
+    // Filter + reorder the case-study sub-nav for satellites that define a
+    // curated case list. Detect the sub-nav by finding any anchor whose
+    // (original) href matches a known case slug; its parent flex row is the
+    // sub-nav container.
+    var caseList = SATELLITE_CASES[from];
+    if (caseList && window.location.pathname.indexOf('/impact/') !== -1) {
+      var subnav = null;
+      var anchors = document.querySelectorAll('a[href]');
+      for (var i = 0; i < anchors.length; i++) {
+        var a = anchors[i];
+        if (a.closest('.site-nav')) continue;
+        if (a.classList.contains('header-logo')) continue;
+        var h = a.getAttribute('href') || '';
+        // Match either the rewritten absolute URL or the original relative one
+        if (/\/impact\/[a-zA-Z0-9-]+\.html/.test(h) || /^[a-zA-Z0-9-]+\.html$/.test(h)) {
+          // Heuristic: sub-nav parent contains multiple such links
+          var parent = a.parentElement;
+          if (parent && parent.querySelectorAll('a[href]').length >= 3) {
+            subnav = parent;
+            break;
+          }
+        }
+      }
+
+      if (subnav) {
+        var tabs = Array.prototype.slice.call(subnav.querySelectorAll(':scope > a'));
+        var bySlug = {};
+        tabs.forEach(function (t) {
+          var href = t.getAttribute('href') || '';
+          var m = href.match(/([a-zA-Z0-9-]+)\.html/);
+          if (m) bySlug[m[1].toLowerCase()] = t;
+        });
+
+        // Detach all existing tabs
+        tabs.forEach(function (t) { if (t.parentElement) t.parentElement.removeChild(t); });
+
+        // Re-append only the curated slugs, in order
+        caseList.forEach(function (slug) {
+          var t = bySlug[slug.toLowerCase()];
+          if (t) subnav.appendChild(t);
+        });
+      }
+    }
   }
 
   if (document.readyState === 'loading') {
