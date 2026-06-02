@@ -31,12 +31,12 @@
   // When a satellite is absent from this map, the sub-nav is left as-is.
   var SATELLITE_CASES = {
     comms: [
-      'market-creation',
-      'data-monetization',
-      'embedded-onboarding',
-      'digital-self-service',
-      'cctv-as-a-service',
-      'huawei-ideahub'
+      { slug: 'market-creation', label: 'Market Creation' },
+      { slug: 'data-monetization', label: 'Data Monetization' },
+      { slug: 'embedded-onboarding', label: 'Embedded Distribution' },
+      { slug: 'digital-self-service', label: 'Digital Self-Service' },
+      { slug: 'cctv-as-a-service', label: 'CCTV-as-a-Service' },
+      { slug: 'huawei-ideahub', label: 'Huawei IdeaHub' }
     ]
   };
 
@@ -149,13 +149,35 @@
           if (m) bySlug[m[1].toLowerCase()] = t;
         });
 
+        // Current page slug (to mark active tab)
+        var pageMatch = window.location.pathname.match(/\/impact\/([a-zA-Z0-9-]+)\.html/);
+        var currentSlug = pageMatch ? pageMatch[1].toLowerCase() : '';
+
+        // Template tab to clone styling from (pick any existing inactive tab)
+        var templateTab = tabs[0];
+
         // Detach all existing tabs
         tabs.forEach(function (t) { if (t.parentElement) t.parentElement.removeChild(t); });
 
-        // Re-append only the curated slugs, in order
-        caseList.forEach(function (slug) {
-          var t = bySlug[slug.toLowerCase()];
-          if (t) subnav.appendChild(t);
+        // Build curated tabs in order. Clone the template for missing slugs.
+        caseList.forEach(function (entry) {
+          var slug = entry.slug.toLowerCase();
+          var t = bySlug[slug];
+          if (!t && templateTab) {
+            t = templateTab.cloneNode(true);
+            t.textContent = entry.label;
+            t.href = PORTFOLIO_BASE + '/impact/' + entry.slug + '.html?from=' + from;
+          }
+          if (!t) return;
+          // Style active vs inactive
+          var isActive = (slug === currentSlug);
+          var baseStyle = 'padding:10px 10px;font-size:13px;white-space:nowrap;';
+          if (isActive) {
+            t.setAttribute('style', baseStyle + 'font-weight:600;color:var(--navy);border-bottom:2px solid var(--gold);');
+          } else {
+            t.setAttribute('style', baseStyle + 'font-weight:500;color:var(--muted);border-bottom:2px solid transparent;');
+          }
+          subnav.appendChild(t);
         });
       }
     }
