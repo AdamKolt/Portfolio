@@ -36,7 +36,7 @@
       { slug: 'embedded-onboarding', label: 'Embedded Distribution' },
       { slug: 'digital-self-service', label: 'Digital Self-Service' },
       { slug: 'cctv-as-a-service', label: 'CCTV-as-a-Service' },
-      { slug: 'huawei-ideahub', label: 'Huawei IdeaHub' }
+      { slug: 'huawei-ideahub', label: 'Account Entrenchment' }
     ]
   };
 
