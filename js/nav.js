@@ -20,8 +20,7 @@
   var SATELLITES = {
     revops: 'https://adamkolt.github.io/RevOps',
     salesgtm: 'https://adamkolt.github.io/SalesGTM',
-    comms: 'https://adamkolt.github.io/Comms',
-    enablement: 'https://adamkolt.github.io/Enablement'
+    comms: 'https://adamkolt.github.io/Comms'
   };
 
   var PORTFOLIO_BASE = 'https://adamkolt.github.io/Portfolio';
